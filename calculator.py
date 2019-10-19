@@ -43,7 +43,7 @@ while True:
             print(multiply(num1, num2))
         elif op == '/':
             print(divide(num1, num2))
-        elif op == 'sq':
-            print(square(num1))
+        elif op == 'pow':
+            print(power(num1, num2))
     else:
         fail()
