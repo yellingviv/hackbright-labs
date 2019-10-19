@@ -1,0 +1,1 @@
+This is a number guessing game, to practice importing functions from modules and evaluating user input.
