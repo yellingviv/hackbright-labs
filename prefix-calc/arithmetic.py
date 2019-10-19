@@ -34,7 +34,7 @@ def square(num1):
 def cube(num1):
     """Return the cube of the input."""
 
-    return num1 * num1 * num1
+    return num1 ** 3
 
 
 def power(num1, num2):
