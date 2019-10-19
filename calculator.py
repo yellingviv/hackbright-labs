@@ -19,6 +19,10 @@ while True:
     if equation[0] == 'q':
         exit()
     elif len(equation) == 3:
-        print(equation)
+        op = equation[0]
+        num1 = int(equation[1])
+        num2 = int(equation[2])
+        if equation[0] == '+':
+            print(add(num1, num2))
     else:
         print('Please review the instructions and enter correct input.')
