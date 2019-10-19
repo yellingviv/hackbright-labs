@@ -27,6 +27,8 @@ while True:
         num1 = int(equation[1])
         if op == 'sq':
             print(square(num1))
+        elif op == 'cube':
+            print(cube(num1))
         else:
             fail()
     elif len(equation) == 3:
