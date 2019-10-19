@@ -1,22 +1,21 @@
 """A prefix-notation calculator.
 
 Uses functions in arithmetic.py
-Limited to a pre-defined number of integer inputs.
-"""
+Limited to a pre-defined number of float inputs."""
 
 from arithmetic import *
 # important the arithmetic.py module
 
 
 print('* * * Welcome to the prefix calculator * * *')
-print('This calculator takes integer input and returns floats.')
+print('This calculator takes float input and returns floats.')
 print('Please enter a mathematical function and integers to be evaluated.')
-print(f'Available functions:\n+ : sum two integers\n- : subtract two integers\n* : multiply two integers\n/ : divide the first integer by the second integer\nsq : square two integers\ncube : cube two integers\npow : raise one integer to the power of the second integer\nmod : return the remainder of the first integer divided by the second\nq : quit')
+print(f'Available functions:\n+ : sum two numbers\n- : subtract two numbers\n* : multiply two numbers\n/ : divide the first number by the second\nsq : square two numbers\ncube : cube two numbers\npow : raise one number to the power of the second number\nmod : return the remainder of the first number divided by the second\nq : quit')
 # inform the user of what is available
 
 while True:
 
-    to_math = input('Input an operation and two integers > ')
+    to_math = input('Input an operation and two numbers > ')
     # request the mathematical activity and numbers to operate on from the user
     equation = to_math.split(" ")
     # tokenize the user input! IE turn the math activity and the numbers into a list
@@ -31,7 +30,7 @@ while True:
     elif len(equation) == 2:
         # only an operand and one digit is present
         op = equation[0]
-        num1 = int(equation[1])
+        num1 = float(equation[1])
         # identify the operation and the number
         if op == 'sq':
             print(square(num1))
@@ -43,8 +42,8 @@ while True:
     elif len(equation) == 3:
         # an operand and two digits are present
         op = equation[0]
-        num1 = int(equation[1])
-        num2 = int(equation[2])
+        num1 = float(equation[1])
+        num2 = float(equation[2])
         # identify the operand and the two numbers
         if op == '+':
             print(add(num1, num2))
