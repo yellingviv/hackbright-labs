@@ -26,5 +26,7 @@ while True:
             print(add(num1, num2))
         elif op == '-':
             print(subtract(num1, num2))
+        elif op == '*':
+            print(multiply(num1, num2))
     else:
         print('Please review the instructions and enter correct input.')
