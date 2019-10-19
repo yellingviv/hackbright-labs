@@ -22,7 +22,9 @@ while True:
         op = equation[0]
         num1 = int(equation[1])
         num2 = int(equation[2])
-        if equation[0] == '+':
+        if op == '+':
             print(add(num1, num2))
+        elif op == '-':
+            print(subtract(num1, num2))
     else:
         print('Please review the instructions and enter correct input.')
