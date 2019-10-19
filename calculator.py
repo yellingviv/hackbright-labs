@@ -45,5 +45,7 @@ while True:
             print(divide(num1, num2))
         elif op == 'pow':
             print(power(num1, num2))
+        elif op == 'mod':
+            print(mod(num1, num2))
     else:
         fail()
