@@ -18,7 +18,7 @@ while True:
 
     if equation[0] == 'q':
         exit()
-    elif len(equation) >= 3 and len(equation) <= 4:
+    elif len(equation) == 3:
         print(equation)
     else:
         print('Please review the instructions and enter correct input.')
