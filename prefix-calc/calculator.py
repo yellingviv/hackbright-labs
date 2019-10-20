@@ -9,7 +9,7 @@ from arithmetic import *
 
 print('* * * Welcome to the prefix calculator * * *')
 print('This calculator takes float input and returns floats.')
-print('Please enter a mathematical function and integers to be evaluated.')
+print('Please enter a mathematical function and numbers to be evaluated.')
 print(f'Available functions:\n+ : sum two numbers\n- : subtract two numbers\n* : multiply two numbers\n/ : divide the first number by the second\nsq : square two numbers\ncube : cube two numbers\npow : raise one number to the power of the second number\nmod : return the remainder of the first number divided by the second\nq : quit')
 # inform the user of what is available
 
