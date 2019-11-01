@@ -19,35 +19,48 @@ def melons_by_type():
 
     return melon_tallies
 
-def melon_prices(melon_type, melon_tallies):
+def melon_prices(melon_tallies):
     """ calculates the earnings per melon type """
 
     melon_prices = { 'Musk': 1.15, 'Hybrid': 1.30, 'Watermelon': 1.75, 'Winter': 4.00 }
+    melon_earnings = {}
 
-    melon_earnings = (melon_tallies[melon_type], melon_prices[melon_type])
+    for melon in melon_prices:
+        melon_income = melon_tallies[melon] * melon_prices[melon]
+        melon_earnings[melon] = { 'price': melon_prices[melon], 'income': melon_income }
 
     return melon_earnings
 
 
 def orders_by_sales():
     sales_stats = open("orders-with-sales.txt")
+    sales = { 'Salespeople': 0,
+    'Internet': 0 }
 
+    for sale in sales_stats:
+        sale = sale.split('|')
+        if sale[1] == '0':
+            sales['Internet'] += float(sale[3])
+        else:
+            sales['Salespeople'] += float(sale[3])
+    sales_states.close()
+
+    return sales
 
 
 print(DIVIDER)
-print('* * * THE MELON REPORT * * *')
+print('* * * * * * THE MELON REPORT * * * * * *')
 print(DIVIDER)
 
 melon_tallies = melons_by_type()
+melon_earnings = melon_prices(melon_tallies)
 total_revenue = 0
 total_melons = 0
 
 for melon in melon_tallies:
-    melon_info = melon_prices(melon, melon_tallies)
-    earnings = melon_info[0] * melon_info[1]
-    total_revenue += earnings
+    total_revenue += melon_earnings[melon]['income']
     total_melons += melon_tallies[melon]
-    print(f'We sold {melon_info[0]} {melon} at ${melon_info[1]} for a total of ${earnings:.2f}.')
+    print(f"We sold {melon_tallies[melon]} {melon} at ${melon_earnings[melon]['price']} for a total of ${melon_earnings[melon]['income']:.2f}.")
 
 print(f'We sold a total of {total_melons} melons for a total revenue of ${total_revenue:.2f}.')
 
