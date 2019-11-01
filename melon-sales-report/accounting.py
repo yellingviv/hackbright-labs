@@ -2,7 +2,8 @@ SALESPERSON_INDEX = 0
 INTERNET_INDEX = 1
 DIVIDER = "* " * 20
 
-def melons_by_type(melon_type_order):
+
+def melons_by_type():
     """ cycles through the melon orders by type file to accumulate total melons ordered """
 
     melon_orders = open('orders-by-type.txt')
@@ -16,16 +17,20 @@ def melons_by_type(melon_type_order):
 
     melon_orders.close()
 
-return melon_tallies
+    return melon_tallies
 
-def melon_prices(melon_type):
+def melon_prices(melon_type, melon_tallies):
     """ calculates the earnings per melon type """
 
     melon_prices = { 'Musk': 1.15, 'Hybrid': 1.30, 'Watermelon': 1.75, 'Winter': 4.00 }
 
-    melon_earnings = melon_tallies[melon_type] * melon_prices[melon_type]
+    melon_earnings = (melon_tallies[melon_type], melon_prices[melon_type])
 
-return melon_earnings
+    return melon_earnings
+
+
+def orders_by_sales():
+    sales_stats = open("orders-with-sales.txt")
 
 
 
@@ -33,15 +38,20 @@ print(DIVIDER)
 print('* * * THE MELON REPORT * * *')
 print(DIVIDER)
 
-
-melon_prices = { 'Musk': 1.15, 'Hybrid': 1.30, 'Watermelon': 1.75, 'Winter': 4.00 }
+melon_tallies = melons_by_type()
 total_revenue = 0
-for melon_type in melon_tallies:
-    price = melon_prices[melon_type]
-    revenue = price * melon_tallies[melon_type]
-    total_revenue += revenue
-    # print("We sold %d %s melons at %0.2f each for a total of %0.2f" % (melon_tallies[melon_type], melon_type, price, revenue))
-    print("We sold {} {} melons at {:.2f} each for a total of {:.2f}".format(melon_tallies[melon_type], melon_type, price, revenue))
+total_melons = 0
+
+for melon in melon_tallies:
+    melon_info = melon_prices(melon, melon_tallies)
+    earnings = melon_info[0] * melon_info[1]
+    total_revenue += earnings
+    total_melons += melon_tallies[melon]
+    print(f'We sold {melon_info[0]} {melon} at ${melon_info[1]} for a total of ${earnings:.2f}.')
+
+print(f'We sold a total of {total_melons} melons for a total revenue of ${total_revenue:.2f}.')
+
+"""
 print(DIVIDER)
 f = open("orders-with-sales.txt")
 sales = [0, 0]
@@ -58,3 +68,4 @@ if sales[1] > sales[0]:
 else:
     print("Time to fire the sales team! Online sales rule all!")
 print(DIVIDER)
+"""
