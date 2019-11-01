@@ -1,5 +1,3 @@
-SALESPERSON_INDEX = 0
-INTERNET_INDEX = 1
 DIVIDER = "* " * 20
 
 
@@ -43,42 +41,48 @@ def orders_by_sales():
             sales['Internet'] += float(sale[3])
         else:
             sales['Salespeople'] += float(sale[3])
-    sales_states.close()
+    sales_stats.close()
 
     return sales
 
+def people_vs_internet(sales):
+    if sales['Salespeople'] > sales['Internet']:
+        return True
+    else:
+        return False
 
-print(DIVIDER)
-print('* * * * * * THE MELON REPORT * * * * * *')
-print(DIVIDER)
 
 melon_tallies = melons_by_type()
 melon_earnings = melon_prices(melon_tallies)
 total_revenue = 0
 total_melons = 0
+sales = orders_by_sales()
+
+print(DIVIDER)
+print('* * * * * * THE MELON REPORT * * * * * *')
+print(DIVIDER)
+print('\n')
 
 for melon in melon_tallies:
     total_revenue += melon_earnings[melon]['income']
     total_melons += melon_tallies[melon]
     print(f"We sold {melon_tallies[melon]} {melon} at ${melon_earnings[melon]['price']} for a total of ${melon_earnings[melon]['income']:.2f}.")
 
+print('\n')
 print(f'We sold a total of {total_melons} melons for a total revenue of ${total_revenue:.2f}.')
 
-"""
+print('\n')
 print(DIVIDER)
-f = open("orders-with-sales.txt")
-sales = [0, 0]
-for line in f:
-    d = line.split("|")
-    if d[1] == "0":
-        sales[0] += float(d[3])
-    else:
-        sales[1] += float(d[3])
-print("Salespeople generated ${:.2f} in revenue.".format(sales[1]))
-print("Internet sales generated ${:.2f} in revenue.".format(sales[0]))
-if sales[1] > sales[0]:
+print('\n')
+
+print(f"Salespeople generated ${sales['Salespeople']:.2f} in revenue.")
+print(f"Internet sales generated ${sales['Internet']:.2f} in revenue.")
+print('\n')
+
+if people_vs_internet:
     print("Guess there's some value to those salespeople after all.")
 else:
     print("Time to fire the sales team! Online sales rule all!")
+
+print('\n')
 print(DIVIDER)
-"""
