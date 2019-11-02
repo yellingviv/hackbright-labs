@@ -1,0 +1,1 @@
+This in-class lab exercise focused on working with data structures, particularly lists. We were provided information in a text file, and from there we worked on pulling out relevant information and assembling into into usable lists, passing information between functions, and generally creating meaningful order of the chaos of a text file.
