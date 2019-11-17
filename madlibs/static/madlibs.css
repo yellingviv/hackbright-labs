@@ -1,0 +1,15 @@
+body {
+    color: green;
+    font-family: sans-serif;
+    background-color: black;
+}
+
+p {
+    visibility: hidden;
+    display: none;
+}
+
+#madlib {
+    visibility: visible;
+    display: inline;
+}

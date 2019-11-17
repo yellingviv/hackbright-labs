@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Your Madlib {% endblock %}
+{% block content %}
+    <h1>Your Madlib</h1>
+    <p {% if par == 1 %} id="madlib" {% endif %}>
+    There once was a {{ color }} {{ noun }} sitting in the Hackbright Lab.
+    When {{ name }} went to pick it up, it burst into flames in a totally
+    {{ adjective }} way. The {{ nounchoice }} loved {% for animal in animal_list[:-1] %} {{ animal }} and {% endfor %} {{ animal_list[-1] }}.
+</p>
+<p {% if par == 2 %} id="madlib" {% endif %}>
+    Once upon a time, a {{ color }} {{ noun }} was sitting in San Francisco.
+    When {{ name }} went to throw it away, it burst into flames in a totally
+    {{ adjective }} way. The {{ nounchoice }} loved {% for animal in animal_list[:-1] %} {{ animal }} and {% endfor %} {{ animal_list[-1] }}.
+</p>
+{% endblock %}
