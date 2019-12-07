@@ -32,8 +32,10 @@ def get_student_by_github(github):
     db_cursor = db.session.execute(QUERY, {'github': github})
 
     row = db_cursor.fetchone()
-
-    print("Student: {} {}\nGitHub account: {}".format(row[0], row[1], row[2]))
+    if row:
+        print("Student: {} {}\nGitHub account: {}".format(row[0], row[1], row[2]))
+    else:
+        print('That student does not exist.')
 
 
 def make_new_student(first_name, last_name, github):
@@ -52,6 +54,17 @@ def make_new_student(first_name, last_name, github):
     db.session.commit()
     print(f'Successfully added student: {first_name} {last_name}')
 
+def add_new_project(title, description, grade):
+    QUERY = """
+            INSERT INTO projects (title, description, max_grade)
+            VALUES (:title, :description, :grade)
+    """
+    db.session.execute(QUERY, {'title': title,
+                               'description': description,
+                               'grade': grade})
+    db.session.commit()
+    print(f'Successfully added: {title}')
+
 
 def get_project_by_title(title):
     """Given a project title, print information about the project."""
@@ -64,7 +77,10 @@ def get_project_by_title(title):
 
     db_cursor = db.session.execute(QUERY, {'title': title})
     row = db_cursor.fetchone()
-    print(f'Title: {row[0]}\nDescription: {row[1]}\nMax Grade: {row[2]}')
+    if row:
+        print(f'Title: {row[0]}\nDescription: {row[1]}\nMax Grade: {row[2]}')
+    else:
+        print('That project does not exist.')
 
 
 def get_grade_by_github_title(github, title):
@@ -77,7 +93,28 @@ def get_grade_by_github_title(github, title):
     db_cursor = db.session.execute(QUERY, {'github': github,
                                            'title': title})
     row = db_cursor.fetchone()
-    print(f'Grade: {row[0]}')
+    if row:
+        print(f'Grade: {row[0]}')
+    else:
+        print('Project not found.')
+
+
+def get_grades_by_student(name):
+    """Print all grades a student has received"""
+    QUERY = """
+            SELECT project_title, grade
+            FROM grades AS g
+            JOIN students AS s ON (g.student_github = s.github)
+            WHERE s.first_name = :name
+    """
+    db_cursor = db.session.execute(QUERY, {'name': name})
+    rows = db_cursor.fetchall()
+    if rows:
+        print(f'Grades for student {name}:')
+        for row in rows:
+            print(f'Project: {row[0]}, Grade: {row[1]}')
+    else:
+        print('That student does not exist.')
 
 
 def assign_grade(github, title, grade):
@@ -113,24 +150,52 @@ def handle_input():
             get_student_by_github(github)
 
         elif command == "new_student":
-            first_name, last_name, github = args  # unpack!
-            make_new_student(first_name, last_name, github)
+            if len(args) == 3:
+                first_name, last_name, github = args  # unpack!
+                make_new_student(first_name, last_name, github)
+            else:
+                print('Please provide a first name, last name, and github.')
 
         elif command == "get_project":
             title = args[0]
             get_project_by_title(title)
 
         elif command == "get_grade":
-            github, title = args
-            get_grade_by_github_title(github, title)
+            if len(args) == 2:
+                github, title = args
+                get_grade_by_github_title(github, title)
+            else:
+                print('Provide github and title')
 
         elif command == "assign_grade":
-            github, title, grade = args
-            assign_grade(github, title, grade)
+            if len(args) == 3:
+                github, title, grade = args
+                assign_grade(github, title, grade)
+            else:
+                print('Provide github, title and grade')
+
+        elif command == "new_project":
+            if len(args) >= 3:
+                if type(args[1]) == int:
+                    title = args[0]
+                    grade = args[1]
+                    description = ""
+                    for arg in args[2:]:
+                        description = description + " " + arg
+                    add_new_project(title, description, grade)
+                else:
+                    print('Provide grade after title')
+            else:
+                print('Provide title, grade and description')
+
+        elif command == "get_grade_by_student":
+            name = args[0]
+            get_grades_by_student(name)
 
         else:
             if command != "quit":
                 print("Invalid Entry. Try again.")
+
 
 
 if __name__ == "__main__":
