@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ratings</title>
+</head>
+<body>
+    Ratings
+    <hr>
+    <ul>
+        {% for message in get_flashed_messages() %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+
+    {% block content %} put your content here {% endblock %}
+    
+    <p><a href="/login">User Login</a> - <a href="/logout">User Logout</a>
+</body>
+</html>
