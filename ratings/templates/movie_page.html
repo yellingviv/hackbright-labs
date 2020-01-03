@@ -5,6 +5,9 @@
 <p>Release Date: {{release_date}}<br>
 <a href="{{ url }}">IMDB Page</a><br>
 </p>
+{% if logged_in %}
+    <p><a href="/rate/{{ movie_id }}">Add A Rating</a></p>
+{% endif %}
 <p>Score List:
     {% for score in score_list%}
     <li>

@@ -74,12 +74,57 @@ def show_movie_page(movie_id):
     for rating in movie.ratings:
         movie_score = rating.score
         score_list.append(movie_score)
+    logged_in = False
+    if session.get('user_id'):
+        logged_in = True
 
     return render_template("movie_page.html",
                            title=title,
                            release_date=release_date,
                            url=url,
-                           score_list=score_list)
+                           score_list=score_list,
+                           logged_in=logged_in,
+                           movie_id=movie_id)
+
+
+@app.route('/rate/<movie_id>')
+def rate_movie(movie_id):
+    """shows form to rate movie"""
+
+    movie = Movie.query.get(movie_id)
+    title = movie.title
+    user_id = session.get('user_id')
+    in_db = Ratings.query.filter(Ratings.user_id == user_id, 
+                                 Ratings.movie_id == movie_id).first()
+    rated = False
+    rating = 0
+    if in_db:
+        rated = True
+        rating = in_db.score
+
+    return render_template("rating_form.html",
+                           rated=rated,
+                           rating=rating,
+                           title=title,
+                           movie_id=movie_id)
+
+
+@app.route('/rated/<movie_id>', methods=['POST'])
+def rated_movie(movie_id):
+    """Updates movie rating in db and flashes success message"""
+    new_rating = request.form.get('score')
+    user_id = session.get('user_id')
+    in_db = Ratings.query.filter(Ratings.user_id == user_id, 
+                                 Ratings.movie_id == movie_id).first()
+    if in_db:
+        in_db.score = new_rating
+    else:
+        rating = Ratings(movie_id=movie_id, user_id=user_id, score=new_rating)
+        db.session.add(rating)
+    db.session.commit()
+    flash('Rating successful!')
+
+    return redirect("/movies")
 
 
 @app.route('/register', methods=['POST'])
