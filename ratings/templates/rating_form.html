@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Rate {{ title }}</h1>
+{% if rated %}
+    <p>You have already rated this movie. You gave it the score of {{ rating }}. Use this form to update your rating.</p>
+{% endif %}
+<p>
+    What rating would you like to give this movie?
+    <form action="/rated/{{ movie_id }}" method="POST">
+    <select name="score">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <input type="submit">
+</form>
+</p>
+
+{% endblock %}
